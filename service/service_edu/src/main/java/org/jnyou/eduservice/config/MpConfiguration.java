@@ -34,10 +34,10 @@ public class MpConfiguration {
      * 分页插件
      * @return
      */
-//    @Bean
-//    public PaginationInterceptor paginationInterceptor(){
-//        return  new PaginationInterceptor();
-//    }
+    @Bean
+    public PaginationInterceptor paginationInterceptor(){
+        return  new PaginationInterceptor();
+    }
 
     /**
      * 逻辑删除插件

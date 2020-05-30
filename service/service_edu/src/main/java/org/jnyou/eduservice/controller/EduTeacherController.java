@@ -1,13 +1,17 @@
 package org.jnyou.eduservice.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.jnyou.commonutils.R;
 import org.jnyou.eduservice.entity.EduTeacher;
+import org.jnyou.eduservice.entity.vo.TeacherQuery;
 import org.jnyou.eduservice.service.EduTeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -50,6 +54,105 @@ public class EduTeacherController {
         if(flag){
             return R.ok();
         }else{
+            return R.error();
+        }
+    }
+
+    /**
+     *
+     * @param currentPage
+     * @param limit
+     * @return
+     */
+    @ApiOperation(value = "分页查询讲师列表")
+    @GetMapping("{currentPage}/{limit}")
+    public R pageQueryList(@PathVariable long currentPage,@PathVariable long limit){
+
+        Page<EduTeacher> page = new Page<>(currentPage,limit);
+
+        teacherService.page(page,null);
+
+        // 获得总记录数
+        long total= page.getTotal();
+        // 获得结果集
+        List<EduTeacher> records = page.getRecords();
+
+        return R.ok().put("data",records).put("count",total);
+    }
+
+    /**
+     *
+     * @param currentPage
+     * @param limit
+     * @param teacherQuery
+     * @return
+     */
+    @ApiOperation(value = "根据条件分页查询")
+    @PostMapping("pageCondition/{currentPage}/{limit}")
+    public R pageQueryByCondition(@PathVariable long currentPage,
+                                  @PathVariable long limit,
+                                  @RequestBody(required = false) TeacherQuery teacherQuery){
+        Page<EduTeacher> page = new Page<>(currentPage,limit);
+
+        // 构建条件表达式
+        QueryWrapper<EduTeacher> wrapper = new QueryWrapper<>();
+        wrapper.like(!StringUtils.isEmpty(teacherQuery.getName()),"name",teacherQuery.getName());
+        wrapper.eq(!StringUtils.isEmpty(teacherQuery.getLevel()),"level",teacherQuery.getLevel());
+        wrapper.ge(!StringUtils.isEmpty(teacherQuery.getBegin()),"gmt_create",teacherQuery.getBegin());
+        wrapper.le(!StringUtils.isEmpty(teacherQuery.getEnd()),"gmt_create",teacherQuery.getEnd());
+
+        teacherService.page(page,wrapper);
+
+
+        // 获得总记录数
+        long total= page.getTotal();
+        // 获得结果集
+        List<EduTeacher> records = page.getRecords();
+
+        return R.ok().put("data",records).put("count",total);
+    }
+
+    /**
+     *
+     * @param id
+     * @return
+     */
+    @GetMapping("{id}")
+    @ApiOperation(value = "根据讲师id查询信息")
+    public R queryTeacherById(@PathVariable String id){
+        EduTeacher teacher = teacherService.getById(id);
+        return R.ok().put("teacher",teacher);
+    }
+
+    /**
+     *
+     * @param eduTeacher
+     * @return
+     */
+    @ApiOperation(value = "添加讲师")
+    @PostMapping("addTeacher")
+    public R addTeacher(@RequestBody EduTeacher eduTeacher){
+
+        boolean flag = teacherService.save(eduTeacher);
+        if(flag){
+            return R.ok();
+        }else{
+            return R.error();
+        }
+    }
+
+    /**
+     *
+     * @param teacher
+     * @return
+     */
+    @ApiOperation(value = "更新讲师信息")
+    @PostMapping("updateTeacher")
+    public R updateTeacher(@RequestBody EduTeacher teacher){
+        boolean flag = teacherService.updateById(teacher);
+        if(flag){
+            return R.ok();
+        }else {
             return R.error();
         }
     }
