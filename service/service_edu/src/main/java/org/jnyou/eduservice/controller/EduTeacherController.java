@@ -10,6 +10,7 @@ import org.jnyou.commonutils.R;
 import org.jnyou.eduservice.entity.EduTeacher;
 import org.jnyou.eduservice.entity.vo.TeacherQuery;
 import org.jnyou.eduservice.service.EduTeacherService;
+import org.jnyou.servicebase.exception.IsMeException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -67,7 +68,14 @@ public class EduTeacherController {
     @ApiOperation(value = "分页查询讲师列表")
     @GetMapping("{currentPage}/{limit}")
     public R pageQueryList(@PathVariable long currentPage,@PathVariable long limit){
-
+        /*
+          自定义异常测试。。。
+        */
+//        try {
+//            int i = 10 / 0;
+//        }catch (Exception e){
+//            throw  new IsMeException(-1,"执行自定义的异常处理。。。");
+//        }
         Page<EduTeacher> page = new Page<>(currentPage,limit);
 
         teacherService.page(page,null);
