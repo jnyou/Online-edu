@@ -2,6 +2,7 @@ package org.jnyou.eduservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
 /**
  * @ClassName yjn
@@ -10,6 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @Version: 1.0
  **/
 @SpringBootApplication
+@ComponentScan(basePackages = {"org.jnyou"}) // 扫描公共模块的配置类
 public class EduWebApplication {
 
     public static void main(String[] args) {

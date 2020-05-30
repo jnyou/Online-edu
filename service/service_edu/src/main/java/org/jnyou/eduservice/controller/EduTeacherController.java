@@ -1,6 +1,9 @@
 package org.jnyou.eduservice.controller;
 
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.jnyou.eduservice.entity.EduTeacher;
 import org.jnyou.eduservice.service.EduTeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +21,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/eduservice/teacher")
+@Api("讲师管理")
 public class EduTeacherController {
 
     @Autowired
@@ -27,6 +31,7 @@ public class EduTeacherController {
      * 查询所有讲师  测试整体集成 rest风格
      * @return
      */
+    @ApiOperation(value = "查询所有讲师的信息")
     @GetMapping("findAll")
     public List<EduTeacher> findAllTeacher(){
         return teacherService.list(null);
@@ -37,8 +42,9 @@ public class EduTeacherController {
      * @param id
      * @return
      */
-    @DeleteMapping({"id"})
-    public boolean logicDel(@PathVariable Long id){
+    @ApiOperation(value = "逻辑删除讲师信息")
+    @DeleteMapping("{id}")
+    public boolean logicDel(@ApiParam(name = "id", value = "讲师ID", required = true) @PathVariable String id){
         return teacherService.removeById(id);
     }
 
