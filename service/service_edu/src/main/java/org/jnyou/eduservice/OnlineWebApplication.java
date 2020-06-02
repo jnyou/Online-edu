@@ -12,10 +12,10 @@ import org.springframework.context.annotation.ComponentScan;
  **/
 @SpringBootApplication
 @ComponentScan(basePackages = {"org.jnyou"}) // 扫描公共模块的配置类
-public class EduWebApplication {
+public class OnlineWebApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(EduWebApplication.class,args);
+        SpringApplication.run(OnlineWebApplication.class,args);
     }
 
 }
