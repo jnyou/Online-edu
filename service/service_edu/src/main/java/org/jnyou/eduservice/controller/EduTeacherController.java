@@ -28,6 +28,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/eduservice/teacher")
 @Api(description = "讲师管理")
+@CrossOrigin // 解决跨域问题
 public class EduTeacherController {
 
     @Autowired
@@ -108,6 +109,8 @@ public class EduTeacherController {
         wrapper.eq(!StringUtils.isEmpty(teacherQuery.getLevel()),"level",teacherQuery.getLevel());
         wrapper.ge(!StringUtils.isEmpty(teacherQuery.getBegin()),"gmt_create",teacherQuery.getBegin());
         wrapper.le(!StringUtils.isEmpty(teacherQuery.getEnd()),"gmt_create",teacherQuery.getEnd());
+        // 降序排序
+        wrapper.orderByDesc("gmt_create");
 
         teacherService.page(page,wrapper);
 
