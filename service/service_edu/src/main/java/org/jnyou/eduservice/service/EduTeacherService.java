@@ -1,7 +1,9 @@
 package org.jnyou.eduservice.service;
 
-import org.jnyou.eduservice.entity.EduTeacher;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.jnyou.eduservice.entity.EduTeacher;
+
+import java.io.Serializable;
 
 /**
  * <p>
@@ -13,4 +15,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface EduTeacherService extends IService<EduTeacher> {
 
+    @Override
+    public boolean removeById(Serializable id);
 }

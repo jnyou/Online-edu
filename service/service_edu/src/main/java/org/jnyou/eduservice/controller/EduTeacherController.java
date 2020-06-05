@@ -26,7 +26,7 @@ import java.util.List;
  * @since 2020-05-30
  */
 @RestController
-@RequestMapping("/eduservice/teacher")
+@RequestMapping("eduservice/teacher")
 @Api(description = "讲师管理")
 @CrossOrigin // 解决跨域问题
 public class EduTeacherController {
@@ -56,7 +56,7 @@ public class EduTeacherController {
         if(flag){
             return R.ok();
         }else{
-            return R.error();
+            return R.error().message("删除失败");
         }
     }
 
@@ -148,7 +148,7 @@ public class EduTeacherController {
         if(flag){
             return R.ok();
         }else{
-            return R.error();
+            return R.error().message("添加失败");
         }
     }
 
@@ -164,7 +164,7 @@ public class EduTeacherController {
         if(flag){
             return R.ok();
         }else {
-            return R.error();
+            return R.error().message("修改失败");
         }
     }
 

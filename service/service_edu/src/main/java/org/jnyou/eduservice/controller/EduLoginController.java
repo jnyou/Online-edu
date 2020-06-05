@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
  * @author Administrator
  */
 @RestController
-@RequestMapping("edu/test")
+@RequestMapping("eduservice/test")
 @CrossOrigin // 解决跨域问题
 public class EduLoginController {
 
