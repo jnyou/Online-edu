@@ -137,14 +137,14 @@ public class EduTeacherController {
 
     /**
      *
-     * @param eduTeacher
+     * @param teacher
      * @return
      */
     @ApiOperation(value = "添加讲师")
     @PostMapping("addTeacher")
-    public R addTeacher(@RequestBody EduTeacher eduTeacher){
+    public R addTeacher(@RequestBody EduTeacher teacher){
 
-        boolean flag = teacherService.save(eduTeacher);
+        boolean flag = teacherService.save(teacher);
         if(flag){
             return R.ok();
         }else{
