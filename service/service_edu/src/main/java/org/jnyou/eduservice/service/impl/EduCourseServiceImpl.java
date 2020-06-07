@@ -1,12 +1,12 @@
 package org.jnyou.eduservice.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.jnyou.eduservice.entity.EduCourse;
 import org.jnyou.eduservice.entity.EduCourseDescription;
 import org.jnyou.eduservice.entity.vo.CourseInfoVo;
 import org.jnyou.eduservice.mapper.EduCourseDescriptionMapper;
 import org.jnyou.eduservice.mapper.EduCourseMapper;
 import org.jnyou.eduservice.service.EduCourseService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.jnyou.servicebase.exception.IsMeException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;

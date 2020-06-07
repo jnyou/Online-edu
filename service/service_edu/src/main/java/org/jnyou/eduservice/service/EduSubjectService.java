@@ -20,6 +20,7 @@ public interface EduSubjectService extends IService<EduSubject> {
     /**
      * 保存课程分类
      * @param file
+     * @param subjectService
      */
     void saveSubject(MultipartFile file,EduSubjectService subjectService);
 

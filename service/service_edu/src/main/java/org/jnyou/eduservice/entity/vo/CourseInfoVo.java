@@ -25,7 +25,10 @@ public class CourseInfoVo implements Serializable {
     @ApiModelProperty(value = "课程讲师ID")
     private String teacherId;
 
-    @ApiModelProperty(value = "课程专业ID")
+    @ApiModelProperty(value = "一级分类ID")
+    private String subjectParentId;
+
+    @ApiModelProperty(value = "二级分类ID")
     private String subjectId;
 
     @ApiModelProperty(value = "课程标题")
