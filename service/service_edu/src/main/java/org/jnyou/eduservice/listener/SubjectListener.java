@@ -24,7 +24,11 @@ public class SubjectListener extends AnalysisEventListener<SubjectData> {
     private EduSubjectService subjectService;
     public SubjectListener() {
     }
-    //创建有参数构造，传递subjectService用于操作数据库
+
+    /**
+     * 创建有参数构造，传递subjectService用于操作数据库
+     * @param subjectService
+     */
     public SubjectListener(EduSubjectService subjectService) {
         this.subjectService = subjectService;
     }
