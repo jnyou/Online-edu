@@ -1,9 +1,11 @@
 package org.jnyou.eduservice.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.jnyou.commonutils.Constast;
 import org.jnyou.eduservice.entity.EduCourse;
 import org.jnyou.eduservice.entity.EduCourseDescription;
 import org.jnyou.eduservice.entity.vo.CourseInfoVo;
+import org.jnyou.eduservice.entity.vo.CoursePublishVo;
 import org.jnyou.eduservice.mapper.EduCourseDescriptionMapper;
 import org.jnyou.eduservice.mapper.EduCourseMapper;
 import org.jnyou.eduservice.service.EduCourseService;
@@ -55,5 +57,71 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
             throw new IsMeException(-1,"课程简介信息保存失败");
         }
         return cid;
+    }
+
+    /**
+     * 根据课程ID查询课程信息
+     * @param courseId
+     * @return
+     */
+    @Override
+    public CourseInfoVo getCourseInfoByCourseId(String courseId) {
+        // 课程信息
+        EduCourse course = this.baseMapper.selectById(courseId);
+        // 课程简介信息
+        EduCourseDescription courseDescription = descriptionMapper.selectById(courseId);
+
+        // 封装VO对象
+        CourseInfoVo courseInfoVo = new CourseInfoVo();
+        BeanUtils.copyProperties(course,courseInfoVo);
+        courseInfoVo.setDescription(courseDescription.getDescription());
+        return courseInfoVo;
+    }
+
+    /**
+     * 修改课程信息
+     * @return
+     */
+    @Override
+    public void updateCourseInfo(CourseInfoVo courseInfoVo) {
+        // 修改课程信息
+        EduCourse eduCourse = new EduCourse();
+        BeanUtils.copyProperties(courseInfoVo,eduCourse);
+        int n = this.baseMapper.updateById(eduCourse);
+        // 修改课程简介
+        EduCourseDescription description = new EduCourseDescription();
+        description.setDescription(courseInfoVo.getDescription());
+        description.setId(courseInfoVo.getId());
+        int m = descriptionMapper.updateById(description);
+        if(n == 0){
+            throw new IsMeException(-1,"修改课程信息失败");
+        }
+        if(m == 0){
+            throw new IsMeException(-1,"修改课程简介失败");
+        }
+    }
+
+    /**
+     * 根据课程ID查询发布的课程信息
+     * @param courseId
+     * @return
+     */
+    @Override
+    public CoursePublishVo queryCoursePublishInfo(String courseId) {
+        CoursePublishVo coursePublishVo = this.baseMapper.queryCoursePublishInfo(courseId);
+        return coursePublishVo;
+    }
+
+    /**
+     * 根据课程ID发布课程
+     * @param id
+     */
+    @Override
+    public boolean publishCourseById(String id) {
+        EduCourse course = new EduCourse();
+        course.setId(id);
+        course.setStatus(Constast.COURSE_NORMAL);
+        Integer count = baseMapper.updateById(course);
+        return null != count && count > 0;
     }
 }

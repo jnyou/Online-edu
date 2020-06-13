@@ -2,6 +2,7 @@ package org.jnyou.eduservice.mapper;
 
 import org.jnyou.eduservice.entity.EduCourse;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.jnyou.eduservice.entity.vo.CoursePublishVo;
 
 /**
  * <p>
@@ -12,5 +13,12 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @since 2020-06-07
  */
 public interface EduCourseMapper extends BaseMapper<EduCourse> {
+
+    /**
+     * 根据课程ID查询发布的课程信息
+     * @param courseId
+     * @return
+     */
+    CoursePublishVo queryCoursePublishInfo(String courseId);
 
 }

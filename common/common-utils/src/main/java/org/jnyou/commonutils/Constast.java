@@ -48,4 +48,12 @@ public interface Constast {
 	 * 默认密码
 	 */
 	public static final String USER_DEFAULT_PWD = "123456";
+
+	/**
+	 * 课程发布状态
+	 * COURSE_NORMAL：已发布
+	 * COURSE_DRAFT：未发布
+	 */
+	public static final String COURSE_NORMAL = "Normal";
+	public static final String COURSE_DRAFT = "Draft";
 }
