@@ -1,18 +1,28 @@
 package org.jnyou.eduservice.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.apache.commons.lang3.StringUtils;
 import org.jnyou.commonutils.Constast;
 import org.jnyou.eduservice.entity.EduCourse;
 import org.jnyou.eduservice.entity.EduCourseDescription;
 import org.jnyou.eduservice.entity.vo.CourseInfoVo;
 import org.jnyou.eduservice.entity.vo.CoursePublishVo;
+import org.jnyou.eduservice.entity.vo.CourseQuery;
+import org.jnyou.eduservice.mapper.EduChapterMapper;
 import org.jnyou.eduservice.mapper.EduCourseDescriptionMapper;
 import org.jnyou.eduservice.mapper.EduCourseMapper;
+import org.jnyou.eduservice.mapper.EduVideoMapper;
+import org.jnyou.eduservice.service.EduChapterService;
 import org.jnyou.eduservice.service.EduCourseService;
+import org.jnyou.eduservice.service.EduVideoService;
 import org.jnyou.servicebase.exception.IsMeException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <p>
@@ -27,6 +37,12 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
 
     @Autowired
     private EduCourseDescriptionMapper descriptionMapper;
+
+    @Autowired
+    private EduChapterService chapterService;
+
+    @Autowired
+    private EduVideoService videoService;
 
     /**
      * 添加课程基本info
@@ -123,5 +139,40 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         course.setStatus(Constast.COURSE_NORMAL);
         Integer count = baseMapper.updateById(course);
         return null != count && count > 0;
+    }
+
+    @Override
+    public Page<EduCourse> queryPageCondition(Integer page, Integer limit, CourseQuery courseQuery) {
+        Page<EduCourse> coursePage = new Page<>(page,limit);
+        QueryWrapper<EduCourse> wrapper = new QueryWrapper<>();
+        wrapper.orderByDesc("gmt_create");
+        if (null != courseQuery){
+            wrapper.like(StringUtils.isNotEmpty(courseQuery.getTitle()),"title",courseQuery.getTitle());
+            wrapper.eq(StringUtils.isNotEmpty(courseQuery.getTeacherId()),"teacher_id",courseQuery.getTeacherId());
+            wrapper.eq(StringUtils.isNotEmpty(courseQuery.getSubjectParentId()),"subject_parent_id",courseQuery.getSubjectParentId());
+            wrapper.eq(StringUtils.isNotEmpty(courseQuery.getSubjectId()),"subject_id",courseQuery.getSubjectId());
+            wrapper.eq(StringUtils.isNotEmpty(courseQuery.getStatus()),"status",courseQuery.getStatus());
+        }
+        this.baseMapper.selectPage(coursePage,wrapper);
+        return coursePage;
+    }
+
+    /**
+     * 删除所有的课程信息
+     * @param courseId
+     */
+    @Override
+    public void removeCourse(String courseId) {
+        // 根据课程ID删除小节
+        videoService.removeVideoByCourseId(courseId);
+        //根据课程ID删除章节
+        chapterService.removeChapterByCourseId(courseId);
+        // 根据课程ID删除课程简介
+        descriptionMapper.deleteById(courseId);
+        // 根据课程ID删除课程基本信息
+        int res = baseMapper.deleteById(courseId);
+        if(res == 0){
+            throw new IsMeException(-1,"删除失败");
+        }
     }
 }

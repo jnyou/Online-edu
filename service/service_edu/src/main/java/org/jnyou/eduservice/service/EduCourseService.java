@@ -1,9 +1,13 @@
 package org.jnyou.eduservice.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.jnyou.eduservice.entity.EduCourse;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.jnyou.eduservice.entity.vo.CourseInfoVo;
 import org.jnyou.eduservice.entity.vo.CoursePublishVo;
+import org.jnyou.eduservice.entity.vo.CourseQuery;
+
+import java.util.List;
 
 /**
  * <p>
@@ -49,4 +53,19 @@ public interface EduCourseService extends IService<EduCourse> {
      * @return
      */
     boolean publishCourseById(String id);
+
+    /**
+     * 分页条件查询课程列表
+     * @param page
+     * @param limit
+     * @param courseQuery
+     * @return
+     */
+    Page<EduCourse> queryPageCondition(Integer page, Integer limit, CourseQuery courseQuery);
+
+    /**
+     * 删除课程所有信息
+     * @param courseId
+     */
+    void removeCourse(String courseId);
 }
