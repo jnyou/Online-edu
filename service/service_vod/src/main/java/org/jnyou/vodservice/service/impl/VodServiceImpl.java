@@ -3,16 +3,21 @@ package org.jnyou.vodservice.service.impl;
 import com.aliyun.vod.upload.impl.UploadVideoImpl;
 import com.aliyun.vod.upload.req.UploadStreamRequest;
 import com.aliyun.vod.upload.resp.UploadStreamResponse;
+import com.aliyuncs.DefaultAcsClient;
+import com.aliyuncs.vod.model.v20170321.DeleteVideoRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.jnyou.commonutils.R;
 import org.jnyou.servicebase.exception.IsMeException;
 import org.jnyou.vodservice.service.VodService;
+import org.jnyou.vodservice.utils.AliyunVodSDKUtils;
 import org.jnyou.vodservice.utils.ConstantPropertiesUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 /**
  * @ClassName yjn
@@ -56,6 +61,31 @@ public class VodServiceImpl implements VodService {
             return videoId;
         } catch (IOException e) {
             throw new IsMeException(-1, "online vod 服务上传失败");
+        }
+    }
+
+    /**
+     * 批量删除云端视频
+     * @param videoIdList
+     * @return
+     */
+    @Override
+    public void removeVideoList(List<String> videoIdList) {
+        try{
+            // 初始化视频点播服务对象
+            DefaultAcsClient client = AliyunVodSDKUtils.initVodClient(ConstantPropertiesUtil.ACCESS_KEY_ID, ConstantPropertiesUtil.ACCESS_KEY_SECRET);
+            // 创建一个删除视频的request
+            DeleteVideoRequest request = new DeleteVideoRequest();
+            // 将ID集合弄成1,2,3形式的可变字符串传入request中
+            String videoIds = org.apache.commons.lang.StringUtils.join(videoIdList.toArray(), ",");
+            //向request设置视频ID
+            request.setVideoIds(videoIds);
+            // 调用初始化对象的方法实现删除
+            client.getAcsResponse(request);
+
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new IsMeException(-1,"删除失败");
         }
     }
 }

@@ -2,6 +2,8 @@ package org.jnyou.vodservice.service;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 /**
  * @ClassName yjn
  * @Description: Aliyun视频点播
@@ -15,4 +17,11 @@ public interface VodService {
      * @return
      */
     public String uploadVideoAliyun(MultipartFile file);
+
+    /**
+     * 批量删除云端视频
+     * @param videoIdList
+     * @return
+     */
+    void removeVideoList(List<String> videoIdList);
 }

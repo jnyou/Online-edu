@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 /**
  * @ClassName yjn
  * @Description: 视频点播
@@ -62,6 +64,20 @@ public class VodServiceController {
             e.printStackTrace();
             throw new IsMeException(-1,"删除失败");
         }
+    }
+
+    /**
+     * 批量删除云端视频
+     * @param videoIdList
+     * @return
+     */
+    @DeleteMapping("deleteBatch")
+    public R removeVideoList(
+            @ApiParam(name = "videoIdList", value = "云端视频id", required = true)
+            @RequestParam("videoIdList") List<String> videoIdList){
+
+        vodService.removeVideoList(videoIdList);
+        return R.ok().message("视频删除成功");
     }
 
 }
