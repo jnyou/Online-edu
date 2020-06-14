@@ -100,7 +100,7 @@ public class EduCourseController {
     }
 
     /**
-     * 根据课程ID删除该课程的所有信息，包括课程基本信息，课程简介，课程章节，小节，小节视频
+     * 根据课程ID删除该课程的所有信息，包括课程基本信息，课程简介，课程章节，小节，小节视频，OSS云端课程封面
      * @param courseId
      * @return
      */

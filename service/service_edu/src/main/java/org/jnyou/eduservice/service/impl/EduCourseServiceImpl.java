@@ -163,12 +163,15 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
      */
     @Override
     public void removeCourse(String courseId) {
-        // 根据课程ID删除小节
+        // 根据课程ID删除小节、视频
         videoService.removeVideoByCourseId(courseId);
         //根据课程ID删除章节
         chapterService.removeChapterByCourseId(courseId);
         // 根据课程ID删除课程简介
         descriptionMapper.deleteById(courseId);
+
+        //删除OSS云端封面 TODO
+
         // 根据课程ID删除课程基本信息
         int res = baseMapper.deleteById(courseId);
         if(res == 0){
