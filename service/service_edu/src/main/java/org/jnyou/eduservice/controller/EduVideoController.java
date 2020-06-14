@@ -1,7 +1,9 @@
 package org.jnyou.eduservice.controller;
 
 
+import org.apache.commons.lang3.StringUtils;
 import org.jnyou.commonutils.R;
+import org.jnyou.eduservice.client.VodClient;
 import org.jnyou.eduservice.entity.EduVideo;
 import org.jnyou.eduservice.service.EduVideoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,9 @@ public class EduVideoController {
 
     @Autowired
     private EduVideoService videoService;
+
+    @Autowired
+    private VodClient client;
 
     /**
      * 添加小节
@@ -57,13 +62,19 @@ public class EduVideoController {
     }
 
     /**
-     * 删除
-     * TODO : 级联删除小节视频
+     * 删除小节，使用feign删除阿里云相关视频
      * @param videoId
      * @return
      */
     @DeleteMapping("deleteVideoInfoById/{videoId}")
     public R deleteVideoInfoById(@PathVariable String videoId){
+        // 通过小节ID查询到视频的ID
+        EduVideo video = videoService.getById(videoId);
+        // 通过视频ID删除小节aliyun视频
+        if(!StringUtils.isEmpty(video.getVideoSourceId())){
+            client.deleteVideoAliyun(video.getVideoSourceId());
+        }
+        //删除小节
         videoService.removeById(videoId);
         return R.ok().message("课程小节删除成功");
     }
