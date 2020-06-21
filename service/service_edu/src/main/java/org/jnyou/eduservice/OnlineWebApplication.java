@@ -14,7 +14,7 @@ import org.springframework.context.annotation.ComponentScan;
  **/
 @SpringBootApplication
 @ComponentScan(basePackages = {"org.jnyou"}) // 扫描公共模块的配置类
-@EnableDiscoveryClient
+@EnableDiscoveryClient // nacos注册
 @EnableFeignClients
 public class OnlineWebApplication {
 

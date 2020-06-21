@@ -6,6 +6,7 @@ import org.jnyou.commonutils.R;
 import org.jnyou.eduservice.client.VodClient;
 import org.jnyou.eduservice.entity.EduVideo;
 import org.jnyou.eduservice.service.EduVideoService;
+import org.jnyou.servicebase.exception.IsMeException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -72,7 +73,10 @@ public class EduVideoController {
         EduVideo video = videoService.getById(videoId);
         // 通过视频ID删除小节aliyun视频
         if(!StringUtils.isEmpty(video.getVideoSourceId())){
-            client.deleteVideoAliyun(video.getVideoSourceId());
+            R result = client.deleteVideoAliyun(video.getVideoSourceId());
+            if(result.getCode() == -1){
+                throw new IsMeException(-1,"删除视频失败，熔断器。。。!");
+            }
         }
         //删除小节
         videoService.removeById(videoId);

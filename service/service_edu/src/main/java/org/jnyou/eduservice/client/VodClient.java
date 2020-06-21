@@ -17,7 +17,7 @@ import java.util.List;
  * @Version: 1.0
  **/
 @Component
-@FeignClient("service-vod") // 调用的服务名称
+@FeignClient(name = "service-vod",fallback = VodFileDegradeFeignClient.class) // 调用的服务名称 失败后调用的方法
 public interface VodClient {
 
     /**
