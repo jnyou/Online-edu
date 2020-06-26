@@ -63,7 +63,7 @@ public class SmsApiServiceImpl implements SmsApiService {
             //发送成功
             if(response.getCode() != null && "OK".equals(response.getCode())) {
                 //记录验证码到redis中
-                redisTemplate.opsForValue().set("phone",code,10, TimeUnit.MINUTES);
+                redisTemplate.opsForValue().set("phone",code,5, TimeUnit.MINUTES);
                 return true;
             }
         } catch (ClientException e) {
