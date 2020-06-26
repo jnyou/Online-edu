@@ -1,11 +1,15 @@
 package org.jnyou.cmsservice.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.jnyou.cmsservice.entity.CrmBanner;
 import org.jnyou.cmsservice.mapper.CrmBannerMapper;
 import org.jnyou.cmsservice.service.CrmBannerService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,6 +28,7 @@ public class CrmBannerServiceImpl extends ServiceImpl<CrmBannerMapper, CrmBanner
     @Autowired
     private CrmBannerMapper bannerMapper;
 
+    @Cacheable(key = "'selectIndexList'",value = "banner")
     @Override
     public List<CrmBanner> getAllBanner() {
         // 需求：显示排序后前两条的banner图
@@ -33,5 +38,33 @@ public class CrmBannerServiceImpl extends ServiceImpl<CrmBannerMapper, CrmBanner
         wrapper.last(" limit 2");
         List<CrmBanner> banners = bannerMapper.selectList(wrapper);
         return banners;
+    }
+
+    @Override
+    public void pageBanner(Page<CrmBanner> pageParam, Object o) {
+        baseMapper.selectPage(pageParam,null);
+    }
+
+    @Override
+    public CrmBanner getBannerById(String id) {
+        return baseMapper.selectById(id);
+    }
+
+    @CachePut(value = "banner", key = "'saveBanner'")
+    @Override
+    public void saveBanner(CrmBanner banner) {
+        baseMapper.insert(banner);
+    }
+
+    @CacheEvict(value = "banner", allEntries=true)
+    @Override
+    public void updateBannerById(CrmBanner banner) {
+        baseMapper.updateById(banner);
+    }
+
+    @CacheEvict(value = "banner", allEntries=true)
+    @Override
+    public void removeBannerById(String id) {
+        baseMapper.deleteById(id);
     }
 }

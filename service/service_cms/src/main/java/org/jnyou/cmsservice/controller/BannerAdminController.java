@@ -27,39 +27,46 @@ public class BannerAdminController {
     @Autowired
     private CrmBannerService bannerService;
 
-    @GetMapping("pageBanner/{page}/{limit}")
+
     @ApiOperation(value = "获取Banner分页列表")
-    public R pageBanner(@ApiParam(name = "page", value = "当前页码", required = true) @PathVariable long page,@ApiParam(name = "limit", value = "每页记录数", required = true) @PathVariable long limit){
-        Page<CrmBanner> bannerPage = new Page<>(page,limit);
-        bannerService.page(bannerPage,null);
-        return R.ok().put("data",bannerPage.getRecords()).put("total",bannerPage.getTotal());
+    @GetMapping("pageBanner/{page}/{limit}")
+    public R index(
+            @ApiParam(name = "page", value = "当前页码", required = true)
+            @PathVariable Long page,
+
+            @ApiParam(name = "limit", value = "每页记录数", required = true)
+            @PathVariable Long limit) {
+
+        Page<CrmBanner> pageParam = new Page<>(page, limit);
+        bannerService.pageBanner(pageParam,null);
+        return R.ok().put("items", pageParam.getRecords()).put("total", pageParam.getTotal());
     }
 
     @ApiOperation(value = "获取Banner")
     @GetMapping("getBannerById/{id}")
     public R get(@PathVariable String id) {
-        CrmBanner banner = bannerService.getById(id);
-        return R.ok().put("data", banner);
+        CrmBanner banner = bannerService.getBannerById(id);
+        return R.ok().put("item", banner);
     }
 
     @ApiOperation(value = "新增Banner")
     @PostMapping("saveBanner")
     public R save(@RequestBody CrmBanner banner) {
-        bannerService.save(banner);
+        bannerService.saveBanner(banner);
         return R.ok();
     }
 
     @ApiOperation(value = "修改Banner")
     @PutMapping("updateBanner")
     public R updateById(@RequestBody CrmBanner banner) {
-        bannerService.updateById(banner);
+        bannerService.updateBannerById(banner);
         return R.ok();
     }
 
     @ApiOperation(value = "删除Banner")
     @DeleteMapping("removeBannerById/{id}")
     public R remove(@PathVariable String id) {
-        bannerService.removeById(id);
+        bannerService.removeBannerById(id);
         return R.ok();
     }
 

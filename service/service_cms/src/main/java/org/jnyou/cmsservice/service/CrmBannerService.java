@@ -1,5 +1,6 @@
 package org.jnyou.cmsservice.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.jnyou.cmsservice.entity.CrmBanner;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -21,4 +22,13 @@ public interface CrmBannerService extends IService<CrmBanner> {
      */
     List<CrmBanner> getAllBanner();
 
+    void pageBanner(Page<CrmBanner> pageParam, Object o);
+
+    CrmBanner getBannerById(String id);
+
+    void saveBanner(CrmBanner banner);
+
+    void updateBannerById(CrmBanner banner);
+
+    void removeBannerById(String id);
 }
