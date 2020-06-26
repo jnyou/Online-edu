@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
  * @Version: 1.0
  **/
 @RestController
-@RequestMapping("api/sms")
+@RequestMapping("edusms/sms")
 @CrossOrigin //跨域
 public class SmsApiController {
 
