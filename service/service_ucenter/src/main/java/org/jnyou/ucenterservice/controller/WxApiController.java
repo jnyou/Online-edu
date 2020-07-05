@@ -23,7 +23,8 @@ import java.util.HashMap;
  * @ClassName WxApiController
  * @Description: 微信扫码登陆：大致步骤：请求微信文档提供的固定url获取微信登陆二维码，扫码后跳转到本地的回调方法（callback），获得code，
  * 再回调方法中通过code、id、密钥获取accessTokenUrl，通过httpclient发送GET请求这个accessTokenUrl，获取返回结果json字符串，
- * 使用gson转换成map格式，获取结果集中的access_token和openid；
+ * 使用gson转换成map格式，获取结果集中的access_token和openid；再通过access_token和openid这两个参数请求微信提供的url进行获取用户信息，
+ * 通过gson转换获取用户昵称、头像等存入数据库中。。。
  * @Author: jnyou
  **/
 @Controller
