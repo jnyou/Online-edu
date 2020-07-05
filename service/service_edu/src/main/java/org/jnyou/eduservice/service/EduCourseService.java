@@ -3,11 +3,14 @@ package org.jnyou.eduservice.service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.jnyou.eduservice.entity.EduCourse;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.jnyou.eduservice.entity.frontvo.CourseDetailsVo;
+import org.jnyou.eduservice.entity.frontvo.CourseFrontQueryVo;
 import org.jnyou.eduservice.entity.vo.CourseInfoVo;
 import org.jnyou.eduservice.entity.vo.CoursePublishVo;
 import org.jnyou.eduservice.entity.vo.CourseQuery;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -75,4 +78,19 @@ public interface EduCourseService extends IService<EduCourse> {
      * @return
      */
     List<EduCourse> selectByTeacherId(String id);
+
+    /**
+     * 分页条件查询前台课程列表
+     * @param pageParam
+     * @param courseQueryVo
+     * @return
+     */
+    Map<String, Object> pageListWeb(Page<EduCourse> pageParam, CourseFrontQueryVo courseQueryVo);
+
+    /**
+     * 根据课程id查询课程相关的基本信息
+     * @param courseId
+     * @return
+     */
+    CourseDetailsVo selectCourseDetailsById(String courseId);
 }
