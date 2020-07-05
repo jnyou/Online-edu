@@ -178,4 +178,16 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
             throw new IsMeException(-1,"删除失败");
         }
     }
+
+    @Override
+    public List<EduCourse> selectByTeacherId(String id) {
+        QueryWrapper<EduCourse> queryWrapper = new QueryWrapper<>();
+
+        queryWrapper.eq("teacher_id", id);
+        //按照最后更新时间倒序排列
+        queryWrapper.orderByDesc("gmt_modified");
+
+        List<EduCourse> courses = baseMapper.selectList(queryWrapper);
+        return courses;
+    }
 }

@@ -68,4 +68,11 @@ public interface EduCourseService extends IService<EduCourse> {
      * @param courseId
      */
     void removeCourse(String courseId);
+
+    /**
+     * 根据讲师ID查询讲师的所有课程
+     * @param id
+     * @return
+     */
+    List<EduCourse> selectByTeacherId(String id);
 }
