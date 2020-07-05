@@ -1,5 +1,6 @@
 package org.jnyou.eduservice.entity.chapter;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
@@ -14,5 +15,8 @@ public class VideoVo {
     private String id;
 
     private String title;
+
+    @ApiModelProperty("视频id")
+    private String videoSourceId;
 
 }

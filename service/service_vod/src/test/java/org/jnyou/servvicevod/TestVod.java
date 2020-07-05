@@ -23,8 +23,8 @@ public class TestVod {
     private static final String accessKeySecret =  "";
 
     public static void main(String[] args) throws Exception {
-//        getVideoAuth();
-        uploadVideo();
+        getVideoAuth();
+//        uploadVideo();
     }
 
     /**
@@ -101,7 +101,7 @@ public class TestVod {
         GetVideoPlayAuthResponse response = new GetVideoPlayAuthResponse();
 
         // 3、向request对象里设置视频ID
-        request.setVideoId("848e7c1bc8564f39a494a5f1ae1da4eb");
+        request.setVideoId("429a025e4da441e69a8b14bdd8d2b1b5");
         // 4、调用初始化对象里面的方法，传递request，获取数据
         response = defaultAcsClient.getAcsResponse(request);
 
