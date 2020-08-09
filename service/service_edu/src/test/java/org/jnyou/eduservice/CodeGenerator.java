@@ -42,7 +42,7 @@ public class CodeGenerator {
         DataSourceConfig dsc = new DataSourceConfig();
         // **
         dsc.setUrl("jdbc:mysql://localhost:3306/jnyou_online_edu?serverTimezone=GMT%2B8");
-        dsc.setDriverName("com.mysql.jdbc.Driver");
+        dsc.setDriverName("com.mysql.cj.jdbc.Driver");
         dsc.setUsername("root");
         dsc.setPassword("admin");
         dsc.setDbType(DbType.MYSQL);

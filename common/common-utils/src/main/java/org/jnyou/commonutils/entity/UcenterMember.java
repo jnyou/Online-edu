@@ -1,4 +1,4 @@
-package org.jnyou.ucenterservice.entity;
+package org.jnyou.commonutils.entity;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
