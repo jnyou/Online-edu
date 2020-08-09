@@ -1,6 +1,6 @@
 package org.jnyou.ucenterservice.mapper;
 
-import org.jnyou.ucenterservice.entity.UcenterMember;
+import org.jnyou.commonutils.entity.UcenterMember;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

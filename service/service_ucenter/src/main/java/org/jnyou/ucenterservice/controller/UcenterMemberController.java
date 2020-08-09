@@ -5,9 +5,10 @@ import io.swagger.annotations.ApiOperation;
 import org.jnyou.commonutils.JwtUtils;
 import org.jnyou.commonutils.R;
 import org.jnyou.servicebase.exception.IsMeException;
-import org.jnyou.ucenterservice.entity.UcenterMember;
+import org.jnyou.commonutils.entity.UcenterMember;
 import org.jnyou.ucenterservice.entity.vo.RegisterVo;
 import org.jnyou.ucenterservice.service.UcenterMemberService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -69,6 +70,22 @@ public class UcenterMemberController {
             e.printStackTrace();
             throw new IsMeException(-1,"获取用户信息失败");
         }
+    }
+
+    /***
+     * 根据token字符串获取用户信息
+     * @param null
+     * @return
+     * @Author jnyou
+     * @Date 2020/8/9
+     */
+    @GetMapping("getInfoUc/{id}")
+    public UcenterMember getInfo(@PathVariable String id) {
+        //根据用户id获取用户信息
+        UcenterMember ucenterMember = memberService.getById(id);
+        UcenterMember memeber = new UcenterMember();
+        BeanUtils.copyProperties(ucenterMember,memeber);
+        return memeber;
     }
 
 }

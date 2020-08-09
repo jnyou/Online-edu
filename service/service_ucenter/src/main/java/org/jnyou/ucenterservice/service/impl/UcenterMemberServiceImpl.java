@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.jnyou.commonutils.JwtUtils;
 import org.jnyou.commonutils.MD5;
 import org.jnyou.servicebase.exception.IsMeException;
-import org.jnyou.ucenterservice.entity.UcenterMember;
+import org.jnyou.commonutils.entity.UcenterMember;
 import org.jnyou.ucenterservice.entity.vo.RegisterVo;
 import org.jnyou.ucenterservice.mapper.UcenterMemberMapper;
 import org.jnyou.ucenterservice.service.UcenterMemberService;

@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.jnyou.commonutils.JwtUtils;
 import org.jnyou.servicebase.exception.IsMeException;
-import org.jnyou.ucenterservice.entity.UcenterMember;
+import org.jnyou.commonutils.entity.UcenterMember;
 import org.jnyou.ucenterservice.service.UcenterMemberService;
 import org.jnyou.ucenterservice.utils.ConstantPropertiesUtil;
 import org.jnyou.ucenterservice.utils.HttpClientUtils;

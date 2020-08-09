@@ -1,6 +1,6 @@
 package org.jnyou.ucenterservice.service;
 
-import org.jnyou.ucenterservice.entity.UcenterMember;
+import org.jnyou.commonutils.entity.UcenterMember;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.jnyou.ucenterservice.entity.vo.RegisterVo;
 
