@@ -18,6 +18,17 @@
             <artifactId>service_base</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+        <!-- 微信支付 -->
+        <dependency>
+            <groupId>com.github.wxpay</groupId>
+            <artifactId>wxpay-sdk</artifactId>
+            <version>0.0.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+        </dependency>
     </dependencies>
 
     <!-- 项目打包时会将java目录中的*.xml文件也进行打包 -->
