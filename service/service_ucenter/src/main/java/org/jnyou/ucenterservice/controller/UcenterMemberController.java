@@ -74,7 +74,7 @@ public class UcenterMemberController {
 
     /***
      * 根据token字符串获取用户信息
-     * @param null
+     * @param id
      * @return
      * @Author jnyou
      * @Date 2020/8/9
@@ -83,9 +83,7 @@ public class UcenterMemberController {
     public UcenterMember getInfo(@PathVariable String id) {
         //根据用户id获取用户信息
         UcenterMember ucenterMember = memberService.getById(id);
-        UcenterMember memeber = new UcenterMember();
-        BeanUtils.copyProperties(ucenterMember,memeber);
-        return memeber;
+        return ucenterMember;
     }
 
 }

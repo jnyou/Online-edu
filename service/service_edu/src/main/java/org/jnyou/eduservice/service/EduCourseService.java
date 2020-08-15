@@ -3,7 +3,7 @@ package org.jnyou.eduservice.service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.jnyou.eduservice.entity.EduCourse;
 import com.baomidou.mybatisplus.extension.service.IService;
-import org.jnyou.eduservice.entity.frontvo.CourseDetailsVo;
+import org.jnyou.commonutils.entity.CourseDetailsVo;
 import org.jnyou.eduservice.entity.frontvo.CourseFrontQueryVo;
 import org.jnyou.eduservice.entity.vo.CourseInfoVo;
 import org.jnyou.eduservice.entity.vo.CoursePublishVo;

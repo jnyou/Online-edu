@@ -2,7 +2,7 @@ package org.jnyou.eduservice.mapper;
 
 import org.jnyou.eduservice.entity.EduCourse;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.jnyou.eduservice.entity.frontvo.CourseDetailsVo;
+import org.jnyou.commonutils.entity.CourseDetailsVo;
 import org.jnyou.eduservice.entity.vo.CoursePublishVo;
 
 /**

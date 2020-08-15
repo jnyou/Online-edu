@@ -1,4 +1,4 @@
-package org.jnyou.eduservice.entity.frontvo;
+package org.jnyou.commonutils.entity;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

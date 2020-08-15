@@ -7,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.jnyou.commonutils.R;
 import org.jnyou.eduservice.entity.EduCourse;
 import org.jnyou.eduservice.entity.chapter.ChapterVo;
-import org.jnyou.eduservice.entity.frontvo.CourseDetailsVo;
+import org.jnyou.commonutils.entity.CourseDetailsVo;
 import org.jnyou.eduservice.entity.frontvo.CourseFrontQueryVo;
 import org.jnyou.eduservice.service.EduChapterService;
 import org.jnyou.eduservice.service.EduCourseService;
@@ -57,6 +57,18 @@ public class CourseFrontController {
         List<ChapterVo> chapterVoList = chapterService.getChapterVideoByCourseId(courseId);
 
         return R.ok().put("course", courseDetailsVo).put("chapterVoList", chapterVoList);
+    }
+
+    /**
+     * 根据课程id查询课程信息
+     * @return
+     * @Author jnyou
+     * @Date 2020/8/15
+     */
+    @GetMapping("getDto/{courseId}")
+    public CourseDetailsVo getCourseInfoDto(@PathVariable String courseId){
+        CourseDetailsVo courseInfoForm = courseService.selectCourseDetailsById(courseId);
+        return courseInfoForm;
     }
 
 

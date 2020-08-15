@@ -11,7 +11,7 @@
         LEFT JOIN edu_subject es2 ON es2.id = ec.subject_id
         WHERE ec.id = #{courseId}
     </select>
-    <select id="queryCourseBaseInfo" resultType="org.jnyou.eduservice.entity.frontvo.CourseDetailsVo">
+    <select id="queryCourseBaseInfo" resultType="org.jnyou.commonutils.entity.CourseDetailsVo">
         SELECT
             c.id,
             c.title,
