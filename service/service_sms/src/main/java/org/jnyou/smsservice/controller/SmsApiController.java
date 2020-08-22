@@ -18,7 +18,6 @@ import java.util.concurrent.TimeUnit;
  **/
 @RestController
 @RequestMapping("edusms/sms")
-@CrossOrigin //跨域
 public class SmsApiController {
 
     @Autowired

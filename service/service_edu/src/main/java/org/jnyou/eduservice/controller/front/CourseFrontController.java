@@ -28,7 +28,6 @@ import java.util.Map;
 @RestController
 @Slf4j
 @RequestMapping("eduservice/course/front")
-@CrossOrigin
 public class CourseFrontController {
 
     @Autowired

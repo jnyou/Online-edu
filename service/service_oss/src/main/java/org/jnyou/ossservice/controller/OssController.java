@@ -19,7 +19,6 @@ import org.springframework.web.multipart.MultipartFile;
  **/
 @RestController
 @RequestMapping("eduoss/fileoss")
-@CrossOrigin
 @Api(description = "OSS服务")
 public class OssController {
 

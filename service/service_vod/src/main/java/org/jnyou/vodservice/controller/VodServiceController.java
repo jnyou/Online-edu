@@ -27,7 +27,6 @@ import java.util.List;
 @RestController
 @RequestMapping("eduvod/video")
 @Api(description="阿里云视频点播微服务")
-@CrossOrigin //跨域
 public class VodServiceController {
 
     @Autowired

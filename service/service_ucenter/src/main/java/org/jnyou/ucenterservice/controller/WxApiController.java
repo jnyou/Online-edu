@@ -29,7 +29,6 @@ import java.util.HashMap;
  **/
 @Controller
 @RequestMapping("api/ucenter/wx")
-@CrossOrigin
 @Slf4j
 public class WxApiController {
 

@@ -22,7 +22,6 @@ import java.util.List;
  **/
 @RestController
 @RequestMapping("eduservice/index")
-@CrossOrigin
 public class IndexFrontController {
 
     @Autowired

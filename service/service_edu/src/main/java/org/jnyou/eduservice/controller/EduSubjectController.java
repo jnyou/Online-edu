@@ -22,7 +22,6 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("eduservice/subject")
-@CrossOrigin
 @Api(description = "课程管理")
 public class EduSubjectController {
 
