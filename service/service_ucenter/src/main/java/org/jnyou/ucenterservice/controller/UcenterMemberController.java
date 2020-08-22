@@ -86,5 +86,18 @@ public class UcenterMemberController {
         return ucenterMember;
     }
 
+    /**
+     * 统计某一天的注册人数
+     * @param date
+     * @return
+     * @Author jnyou
+     * @Date 2020/8/22
+     */
+    @GetMapping("countRegister/{date}")
+    public R countRegister(@PathVariable String date){
+        Integer count = memberService.selectRegisterCount(date);
+        return R.ok().put("countRegister", count);
+    }
+
 }
 

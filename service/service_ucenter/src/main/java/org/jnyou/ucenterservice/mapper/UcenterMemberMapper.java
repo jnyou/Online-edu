@@ -13,4 +13,12 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface UcenterMemberMapper extends BaseMapper<UcenterMember> {
 
+    /**
+     * 统计某天的注册人数
+     * @param date
+     * @return
+     * @Author jnyou
+     * @Date 2020/8/22
+     */
+    Integer selectRegisterCount(String date);
 }
