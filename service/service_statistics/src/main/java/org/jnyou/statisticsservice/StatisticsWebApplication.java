@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * 分类名称
@@ -22,6 +23,8 @@ import org.springframework.context.annotation.ComponentScan;
 @MapperScan("org.jnyou.statisticsservice.mapper")
 // 扫描公共模块的配置类
 @ComponentScan(basePackages = {"org.jnyou"})
+// 开启定时任务
+@EnableScheduling
 public class StatisticsWebApplication {
     public static void main(String[] args) {
         SpringApplication.run(StatisticsWebApplication.class,args);
