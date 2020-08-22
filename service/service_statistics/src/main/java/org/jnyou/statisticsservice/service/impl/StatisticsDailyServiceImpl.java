@@ -12,6 +12,11 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * <p>
  * 网站统计日数据 服务实现类
@@ -49,6 +54,47 @@ public class StatisticsDailyServiceImpl extends ServiceImpl<StatisticsDailyMappe
         daily.setDateCalculated(date);
 
         baseMapper.insert(daily);
+    }
 
+    @Override
+    public Map<String, Object> getChartData(String begin, String end, String type) {
+        QueryWrapper<StatisticsDaily> dayQueryWrapper = new QueryWrapper<>();
+        // 只查询查询出类型和时间
+        dayQueryWrapper.select(type, "date_calculated");
+        dayQueryWrapper.between("date_calculated", begin, end);
+        List<StatisticsDaily> stats = baseMapper.selectList(dayQueryWrapper);
+
+        // 需要返回两部分数据，日期和数量，echarts需要返回数组结构，所以创建两个list集合封装返回
+        // 创建日期的list集合
+        List<String> dateList = new ArrayList<>();
+
+        // 创建数量的list集合
+        List<Integer> dataList = new ArrayList<>();
+
+        stats.forEach(daily -> {
+            // 封装日期集合
+            dateList.add(daily.getDateCalculated());
+            // 封装数量
+            switch (type) {
+                case "register_num":
+                    dataList.add(daily.getRegisterNum());
+                    break;
+                case "login_num":
+                    dataList.add(daily.getLoginNum());
+                    break;
+                case "video_view_num":
+                    dataList.add(daily.getVideoViewNum());
+                    break;
+                case "course_num":
+                    dataList.add(daily.getCourseNum());
+                    break;
+                default:
+                    break;
+            }
+        });
+        Map<String, Object> map = new HashMap<>(1024);
+        map.put("dataList", dataList);
+        map.put("dateList", dateList);
+        return map;
     }
 }
