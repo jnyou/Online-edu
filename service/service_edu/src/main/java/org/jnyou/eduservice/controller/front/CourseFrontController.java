@@ -4,7 +4,9 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
+import org.jnyou.commonutils.JwtUtils;
 import org.jnyou.commonutils.R;
+import org.jnyou.eduservice.client.OrderClient;
 import org.jnyou.eduservice.entity.EduCourse;
 import org.jnyou.eduservice.entity.chapter.ChapterVo;
 import org.jnyou.commonutils.entity.CourseDetailsVo;
@@ -14,6 +16,7 @@ import org.jnyou.eduservice.service.EduCourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -34,6 +37,9 @@ public class CourseFrontController {
     @Autowired
     private EduChapterService chapterService;
 
+    @Autowired
+    private OrderClient orderClient;
+
     @ApiOperation(value = "分页课程列表")
     @PostMapping("getFrontCourseListByPage/{page}/{size}")
     public R getFrontCourseListByPage(@ApiParam(name = "page", value = "当前页码",required = true)  @PathVariable long page,
@@ -48,7 +54,7 @@ public class CourseFrontController {
     @GetMapping(value = "{courseId}")
     public R getById(
             @ApiParam(name = "courseId", value = "课程ID", required = true)
-            @PathVariable String courseId){
+            @PathVariable String courseId, HttpServletRequest request){
 
         //查询课程信息和讲师信息
         CourseDetailsVo courseDetailsVo = courseService.selectCourseDetailsById(courseId);
@@ -56,7 +62,13 @@ public class CourseFrontController {
         //查询当前课程的章节信息
         List<ChapterVo> chapterVoList = chapterService.getChapterVideoByCourseId(courseId);
 
-        return R.ok().put("course", courseDetailsVo).put("chapterVoList", chapterVoList);
+        // 远程调用判断用户是否购买课程
+        boolean isBuyCourse = false;
+        if(null != JwtUtils.getMemberIdByJwtToken(request)){
+            isBuyCourse = orderClient.isBuyCourse(courseId, JwtUtils.getMemberIdByJwtToken(request));
+        }
+
+        return R.ok().put("course", courseDetailsVo).put("chapterVoList", chapterVoList).put("isbuyCourse",isBuyCourse);
     }
 
     /**

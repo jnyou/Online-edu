@@ -57,5 +57,24 @@ public class OrderController {
         return R.ok().put("item",order);
     }
 
+    /**
+     * 根据用户id和课程id查询支付状态（判断是否购买课程）
+     * @param courseId
+     * @param memberId
+     * @return
+     * @Author jnyou
+     * @Date 2020/8/22
+     */
+    @GetMapping("isBuyCourse/{courseId}/{memberId}")
+    public boolean isBuyCourse(@PathVariable String courseId,@PathVariable String memberId){
+        QueryWrapper<Order> wrapper = new QueryWrapper<Order>();
+        wrapper.eq("course_id",courseId);
+        wrapper.eq("member_id",memberId);
+        // 1 : 代表已经支付
+        wrapper.eq("status",1);
+        int count = orderService.count(wrapper);
+        return count > 0 ? true : false;
+    }
+
 }
 
