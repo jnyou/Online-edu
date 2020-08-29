@@ -28,7 +28,7 @@ public class SwaggerConfig {
                 .groupName("webApi")
                 .apiInfo(webApiInfo())
                 .select()
-                .paths(Predicates.not(PathSelectors.regex("/admin/.*")))
+//                .paths(Predicates.not(PathSelectors.regex("/admin/.*"))) 不显示的接口
                 .paths(Predicates.not(PathSelectors.regex("/error.*")))
                 .build();
 

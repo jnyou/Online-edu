@@ -304,4 +304,85 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
         //添加到角色菜单关系表
         rolePermissionService.saveBatch(rolePermissionList);
     }
+
+    /**
+     * 递归算法查询所有菜单
+     * @return
+     * @Author jnyou
+     * @Date 2020/8/29
+     */
+    @Override
+    public List<Permission> selectAllPermission() {
+        // 1、查询所有菜单数据
+        List<Permission> permissionList = this.baseMapper.selectList(new QueryWrapper<Permission>().orderByDesc("id"));
+
+        // 封装菜单数据
+        List<Permission> resultList = buildPermissionList(permissionList);
+        return resultList;
+    }
+
+    /**
+     * 把查询出来得所有菜单进行封装返回，递归算法实现
+     * @param permissionList
+     * @return
+     * @Author jnyou
+     * @Date 2020/8/29
+     */
+    private List<Permission> buildPermissionList(List<Permission> permissionList) {
+        // 子菜单集合
+        List<Permission> finalNode = new ArrayList<>();
+        permissionList.forEach(permissionNode -> {
+            // 获取到递归算法的入口，顶层菜单
+            if("0".equals(permissionNode.getPid())){
+                // 设置级别为1
+                permissionNode.setLevel(1);
+                // 根据顶层菜单往下查询子菜单，封装到finalNode里面，递归操作
+                finalNode.add(selectChild(permissionNode,permissionList));
+            }
+        });
+        return finalNode;
+    }
+
+    /**
+     *
+     * @param permissionNode 一级菜单
+     * @param permissionList 所有菜单
+     * @return
+     * @Author jnyou
+     * @Date 2020/8/29
+     */
+    private Permission selectChild(Permission permissionNode, List<Permission> permissionList) {
+        // 向一级菜单中添加二级菜单，向二级菜单添加三级惨淡，向三级菜单添加四级菜单。。。
+        /**
+         *
+         * 下面代码解析：
+         * permissionNode：一级菜单
+         * permissionList：所有菜单
+         *
+         * 根据id和pid判断下级菜单，找到后给当前级别的菜单添加相应的级别，（获取到上一级菜单level + 1），
+         * 紧接着将找到的下级菜单放入父菜单中，比如判断后的item为二级菜单，将二级菜单放入一级菜单中，调用当前本方法继续查询二级菜单的三级菜单。
+         *
+         */
+
+        // 初始化子菜单对象
+        permissionNode.setChildren(new ArrayList<Permission>());
+
+        // 遍历所有菜单，进行判断，比较id和pid值是否相等
+        permissionList.forEach(item -> {
+            // 判断id和pid是否相同
+            if(permissionNode.getId().equals(item.getPid())){
+                // 找到后将父level值+1就是当前级别的菜单level值
+                int level = permissionNode.getLevel() + 1;
+                item.setLevel(level);
+                // 如果children为空，初始化一下，防止报错
+                if(null == permissionNode.getChildren()){
+                    permissionNode.setChildren(new ArrayList<Permission>());
+                }
+                // 把查询出来的子菜单放在父菜单中
+                permissionNode.getChildren().add(selectChild(item,permissionList));
+            }
+        });
+
+        return permissionNode;
+    }
 }

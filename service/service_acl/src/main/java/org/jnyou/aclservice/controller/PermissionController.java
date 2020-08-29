@@ -22,8 +22,16 @@ public class PermissionController {
     @Autowired
     private PermissionService permissionService;
 
-    @ApiOperation(value = "查询所有菜单")
+    @ApiOperation(value = "递归算法查询所有菜单")
     @GetMapping
+    public R selectAllPermission() {
+        List<Permission> list =  permissionService.selectAllPermission();
+        return R.ok().put("children",list);
+    }
+
+
+    @ApiOperation(value = "查询所有菜单")
+    @GetMapping("indexAllPermission")
     public R indexAllPermission() {
         List<Permission> list =  permissionService.queryAllMenuGuli();
         return R.ok().put("children",list);

@@ -63,4 +63,13 @@ public interface PermissionService extends IService<Permission> {
      *
      */
     void saveRolePermissionRealtionShipGuli(String roleId, String[] permissionId);
+
+    /**
+     * 递归算法查询所有菜单
+     * @return
+     * @Author jnyou
+     * @Date 2020/8/29
+     */
+    List<Permission> selectAllPermission();
+
 }
