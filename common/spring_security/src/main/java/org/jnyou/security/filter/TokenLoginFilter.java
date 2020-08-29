@@ -23,6 +23,7 @@ import java.util.ArrayList;
 
 
 /**
+ * 身份认证
  * 登录过滤器，继承UsernamePasswordAuthenticationFilter，对用户名密码进行登录校验
  * @author 夏小颜
  */
@@ -40,6 +41,14 @@ public class TokenLoginFilter extends UsernamePasswordAuthenticationFilter {
         this.setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher("/admin/acl/login","POST"));
     }
 
+    /**
+     * 得到登陆用户的登录名和密码
+     * @param req
+     * @param res
+     * @return
+     * @Author jnyou
+     * @Date 2020/8/29
+     */
     @Override
     public Authentication attemptAuthentication(HttpServletRequest req, HttpServletResponse res)
             throws AuthenticationException {

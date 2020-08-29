@@ -46,6 +46,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         org.jnyou.security.entity.User curUser = new org.jnyou.security.entity.User();
         BeanUtils.copyProperties(user,curUser);
 
+        //根据用户ID查询用户权限菜单
         List<String> authorities = permissionService.selectPermissionValueByUserId(user.getId());
         SecurityUser securityUser = new SecurityUser(curUser);
         securityUser.setPermissionValueList(authorities);

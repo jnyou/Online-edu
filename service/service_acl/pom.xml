@@ -18,6 +18,7 @@
             <artifactId>service_base</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+        <!-- 引入spring_security模块 -->
         <dependency>
             <groupId>org.jnyou</groupId>
             <artifactId>spring_security</artifactId>

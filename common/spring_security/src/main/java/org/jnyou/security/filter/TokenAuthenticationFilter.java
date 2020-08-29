@@ -22,6 +22,7 @@ import java.util.Collection;
 import java.util.List;
 
 /**
+ * 授权
  * 访问过滤器
  * @author 夏小颜
  */
